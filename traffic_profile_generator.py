@@ -54,7 +54,7 @@ def main():
         df.loc[i] = [dow, now, duration]
         time.sleep(60)
 
-    if not os.path.isfile('traffic_times.csv'):
+    if not os.path.isfile('data.csv'):
         with open('data.csv', 'w') as f:
             df.to_csv(f, header=True, index=False)
 
