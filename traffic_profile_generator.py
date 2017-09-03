@@ -5,8 +5,9 @@ import pandas as pd
 from tqdm import tqdm
 from datetime import datetime
 import matplotlib.pyplot as plt
+import config
 
-gmaps = googlemaps.Client(key='put your key here') #use your google api key here
+gmaps = googlemaps.Client(config.key) #use your google api key here
 
 ########################################################
 """ Change these variables to configure code """
