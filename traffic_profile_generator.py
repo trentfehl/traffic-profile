@@ -49,7 +49,7 @@ def main():
     df = pd.DataFrame(columns=('day_of_week','datetime','duration'))
 
     print("Calculating trip duration over the next %s hours at 1 minute intervals." % hours)
-    for i in tqdm(range(hours*10)):
+    for i in tqdm(range(hours*60)):
         now, duration = get_duration()
         dow = datetime.today().weekday()
         df.loc[i] = [dow, now, duration]
