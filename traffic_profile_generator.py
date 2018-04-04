@@ -11,8 +11,8 @@ gmaps = googlemaps.Client(config.key) #use your google api key here
 
 ########################################################
 """ Change these variables to configure code """
-origin = "origin address"
-destination = "destination address"
+origin = config.origin
+destination = config.destination
 hours = 1 #number of hours to profile for
 ########################################################
 
@@ -39,7 +39,7 @@ def plot_todays_traffic(data):
     ax.set_title('Morning Traffic Profile for %s' % datetime.now().strftime("%Y-%m-%d"))
 
     fig.autofmt_xdate()
-    plt.show()
+    plt.savefig('/tmp/%s.png' % datetime.now().strftime("%Y-%m-%d"))
 
     return
 
@@ -48,19 +48,19 @@ def main():
     # data stored is csv of day of the week, date time of instance, and duration of trip
     df = pd.DataFrame(columns=('day_of_week','datetime','duration'))
 
-    print "Calculating trip duration in traffic every 1 min for %s hours" % hours
-    for i in tqdm(range(hours*60)):
+    print("Calculating trip duration over the next %s hours at 1 minute intervals." % hours)
+    for i in tqdm(range(hours*10)):
         now, duration = get_duration()
         dow = datetime.today().weekday()
         df.loc[i] = [dow, now, duration]
         time.sleep(60)
 
-    if not os.path.isfile('data.csv'):
-        with open('data.csv', 'w') as f:
+    if not os.path.isfile('/tmp/traffic_data.csv'):
+        with open('/tmp/traffic_data.csv', 'w') as f:
             df.to_csv(f, header=True, index=False)
 
     else:
-        with open('data.csv', "a") as f:
+        with open('/tmp/traffic_data.csv', "a") as f:
             df.to_csv(f, header=False, index=False)
 
     plot_todays_traffic(df)
